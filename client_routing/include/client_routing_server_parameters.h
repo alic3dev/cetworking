@@ -3,7 +3,6 @@
 
 struct client_routing_server_parameters {
   unsigned short int port;
-
 };
 
 #endif

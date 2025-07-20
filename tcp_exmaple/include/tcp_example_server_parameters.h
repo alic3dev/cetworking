@@ -3,7 +3,6 @@
 
 struct tcp_example_server_parameters {
   unsigned short int port;
-
 };
 
 #endif
