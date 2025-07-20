@@ -1,5 +1,5 @@
-#ifndef __CLIENT_ROUTING_MODE_H
-#define __CLIENT_ROUTING_MODE_H
+#ifndef __client_routing_mode_h
+#define __client_routing_mode_h
 
 enum client_routing_mode {
   client,

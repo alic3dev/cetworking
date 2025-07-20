@@ -1,5 +1,5 @@
-#ifndef __TCP_EXAMPLE_PARAMETERS_H
-#define __TCP_EXAMPLE_PARAMETERS_H
+#ifndef __tcp_example_parameters_h
+#define __tcp_example_parameters_h
 
 #include <tcp_example_mode.h>
 

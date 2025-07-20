@@ -1,5 +1,5 @@
-#ifndef __TCP_EXAMPLE_MODE_H
-#define __TCP_EXAMPLE_MODE_H
+#ifndef __tcp_example_mode_h
+#define __tcp_example_mode_h
 
 enum tcp_example_mode {
   client,

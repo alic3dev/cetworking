@@ -1,5 +1,5 @@
-#ifndef __TCP_EXAMPLE_H
-#define __TCP_EXAMPLE_H
+#ifndef __tcp_example_h
+#define __tcp_example_h
 
 int main(int, char**);
 

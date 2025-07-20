@@ -1,5 +1,5 @@
-#ifndef __CLIENT_ROUTING_PARAMETERS_H
-#define __CLIENT_ROUTING_PARAMETERS_H
+#ifndef __client_routing_parameters_h
+#define __client_routing_parameters_h
 
 #include <client_routing_mode.h>
 

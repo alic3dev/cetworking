@@ -1,5 +1,5 @@
-#ifndef __CLIENT_ROUTING_CLIENT_H
-#define __CLIENT_ROUTING_CLIENT_H
+#ifndef __client_routing_client_h
+#define __client_routing_client_h
 
 int client_routing_client();
 

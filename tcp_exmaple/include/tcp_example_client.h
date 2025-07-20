@@ -1,5 +1,5 @@
-#ifndef __TCP_EXAMPLE_CLIENT_H
-#define __TCP_EXAMPLE_CLIENT_H
+#ifndef __tcp_example_client_h
+#define __tcp_example_client_h
 
 int tcp_example_client();
 

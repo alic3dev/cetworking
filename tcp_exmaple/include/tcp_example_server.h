@@ -1,5 +1,5 @@
-#ifndef __TCP_EXAMPLE_SERVER
-#define __TCP_EXAMPLE_SERVER
+#ifndef __tcp_example_server
+#define __tcp_example_server
 
 int tcp_example_server();
 
