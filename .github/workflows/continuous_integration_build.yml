@@ -1,0 +1,23 @@
+name: continuous_integration_build
+on:
+  push:
+    branches: ["core"]
+  pull_request:
+    branches: ["core"]
+jobs:
+  continuous_integration_build:
+    runs-on: macos-latest
+    steps:
+      - name: checkout_cetworking
+        uses: actions/checkout@v4
+        with:
+          path: cetworking
+      - name: checkout_clic3
+        uses: actions/checkout@v4
+        with:
+          path: clic3
+          repository: alic3dev/clic3
+      - name: continuous_integration_build_make_clic3
+        run: cd clic3 && make library/clic3.o
+      - name: continuous_integration_build_make_cetworking
+        run: cd cetworking && make all
