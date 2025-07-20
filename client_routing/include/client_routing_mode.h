@@ -7,4 +7,3 @@ enum client_routing_mode {
 };
 
 #endif
-

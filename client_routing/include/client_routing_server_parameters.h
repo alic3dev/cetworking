@@ -6,4 +6,3 @@ struct client_routing_server_parameters {
 };
 
 #endif
-

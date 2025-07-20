@@ -8,4 +8,3 @@ struct client_routing_parameters {
 };
 
 #endif
-

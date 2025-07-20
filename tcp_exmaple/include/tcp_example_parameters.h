@@ -8,4 +8,3 @@ struct tcp_example_parameters {
 };
 
 #endif
-

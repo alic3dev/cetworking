@@ -6,4 +6,3 @@ struct tcp_example_server_parameters {
 };
 
 #endif
-

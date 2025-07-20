@@ -7,4 +7,3 @@ enum tcp_example_mode {
 };
 
 #endif
-

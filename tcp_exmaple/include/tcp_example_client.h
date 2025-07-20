@@ -4,4 +4,3 @@
 int tcp_example_client();
 
 #endif
-
