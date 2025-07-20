@@ -20,9 +20,11 @@ int main(
     parameters_index < length_parameters;
     ++parameters_index
   ) {
+    int index_client_server;
+
     switch(parameters_index) {
       case 1:
-        int index_client_server = clic3_char_arrays_within(
+        index_client_server = clic3_char_arrays_within(
           parameters[
             parameters_index
           ],
