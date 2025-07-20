@@ -1,12 +1,12 @@
-#include "tcp_example.h"
+#include <tcp_example.h>
+
+#include <tcp_example_parameters.h>
+#include <tcp_example_client.h>
+#include <tcp_example_server.h>
+
+#include <clic3.h>
 
 #include <stdio.h>
-
-#include "clic3.h"
-
-#include "tcp_example_parameters.h"
-#include "tcp_example_client.h"
-#include "tcp_example_server.h"
 
 int main(
   int arguments_length, 
