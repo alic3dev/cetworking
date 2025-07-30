@@ -1,20 +1,57 @@
-directory_base=.
+name=cetworking
 
-prefix_directory=__directory__
-prefix_directory_clean=$(prefix_directory)__clean__
+directory_examples=examples
+directory_include=include
+directory_library=library
+directory_objects=objects
+directory_sources=sources
 
-directories=$(dir $(wildcard $(directory_base)/*/makefile))
+file_output=${directory_library}/${name}
 
-directories_prefixed=$(addprefix $(prefix_directory)/, $(directories))
-directories_prefixed_clean=$(addprefix $(prefix_directory_clean)/, $(directories))
+files_sources=${shell find ${directory_sources} -name \*.c}
+files_objects=${patsubst ${directory_sources}/%.c,${directory_objects}/%.o,${files_sources}}
 
-all: $(directories_prefixed)
+cc=gcc
+c_flags=-O3 -I${directory_include}
 
-clean: clean_all
-clean_all: $(directories_prefixed_clean)
+ld=ld
+ld_flags=
 
-$(prefix_directory)/%: %
-	cd $< && if [[ -z "$$(cat makefile | grep "all:")" ]]; then make; else make all; fi
+strip=strip
+strip_flags=-x
 
-$(prefix_directory_clean)/%: %
-	cd $< && if [[ -z "$$(cat makefile | grep "clean_all:")" ]]; then make clean; else make clean_all; fi
+${name}: ${file_output}
+
+all: ${file_output} examples
+
+examples: .always
+	cd ${directory_examples} && make
+
+${file_output}: ${files_objects} ${directory_library}
+	${ld} ${ld_flags} -r ${files_objects} -o ${file_output}
+	${strip} ${strip_flags} ${file_output}
+
+${directory_objects}/%.o: ${directory_sources}/%.c
+	${shell dirname="${patsubst ${shell pwd}/%,%,${abspath ${dir $@}}}" && if [[ ! -d $${dirname} ]]; then printf "mkdir -p $${dirname}\n" && mkdir -p $${dirname}; fi}
+	${cc} ${c_flags} -c $< -o $@
+
+${directory_library}:
+	mkdir -p ${directory_library}
+
+${directory_objects}:
+	mkdir -p ${directory_objects}
+
+clean_all: clean clean_examples
+
+clean: clean_library clean_objects
+
+clean_examples:
+	cd ${directory_examples} && make clean
+
+clean_library:
+	-rm -r ${directory_library} 2> /dev/null
+
+clean_objects:
+	-rm -r ${directory_objects} 2> /dev/null
+
+.always:
