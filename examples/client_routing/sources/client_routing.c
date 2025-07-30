@@ -6,12 +6,16 @@
 
 #include <clic3.h>
 
+#include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 int main(
   int length_parameters,
   char** parameters
 ) {
+  srand(time((void*)0));
+
   struct client_routing_parameters client_routing_parameters;
   client_routing_parameters.mode = server;
 
@@ -28,18 +32,14 @@ int main(
           parameters[
             parameters_index
           ],
-          2,
+          3,
           "client",
+          "client_host",
           "server"
         );
-        
-        if (index_client_server == 0) {
-          client_routing_parameters.mode = client;
-          break;
-        } else if (index_client_server == 1) {
-          client_routing_parameters.mode = server;
-          break;
-        }
+
+        client_routing_parameters.mode = index_client_server;
+        break;
       default:
         fprintf(
           stderr,
@@ -55,7 +55,10 @@ int main(
 
   switch (client_routing_parameters.mode) {
     case client:
-      return client_routing_client();
+      return client_routing_client(0);
+      break;
+    case client_host:
+      return client_routing_client(1);
       break;
     case server:
       return client_routing_server();
