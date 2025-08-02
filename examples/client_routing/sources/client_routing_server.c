@@ -88,9 +88,10 @@ int client_routing_server(
   );
 
   server.index_connected = malloc(
-    sizeof(unsigned int) *
+    sizeof(signed long int) *
     server.length_clients
   );
+  server.index_connected[0] = -1;
 
   server.socket_address_clients = malloc(
     sizeof(struct sockaddr) *
@@ -109,6 +110,11 @@ int client_routing_server(
 
   server.routing_mode_clients = malloc(
     sizeof(enum client_routing_mode) *
+    server.length_clients
+  );
+
+  server.routing_stage = malloc(
+    sizeof(enum client_routing_stage) *
     server.length_clients
   );
 
@@ -164,9 +170,12 @@ int client_routing_server(
 
     server.index_connected = realloc(
       server.index_connected,
-      sizeof(unsigned int) *
+      sizeof(signed long int) *
       server.length_clients
     );
+    server.index_connected[
+      server.length_clients - 1
+    ] = -1;
 
     server.socket_address_clients = realloc(
       server.socket_address_clients,
@@ -189,6 +198,12 @@ int client_routing_server(
     server.routing_mode_clients = realloc(
       server.routing_mode_clients,
       sizeof(enum client_routing_mode) *
+      server.length_clients
+    );
+
+    server.routing_stage = realloc(
+      server.routing_stage,
+      sizeof(enum client_routing_stage) *
       server.length_clients
     );
 
@@ -238,6 +253,7 @@ int client_routing_server(
   free(server.socket_clients);
   free(server.index_connected);
   free(server.routing_mode_clients);
+  free(server.routing_stage);
 
   for (
     unsigned int index_client = 0;
@@ -293,7 +309,10 @@ void* client_routing_server_thread_client(
   ][10] = '\0';
 
   unsigned char connected = 1;
-  enum client_routing_stage routing_stage = initialization;
+
+  server->routing_stage[
+    index_client
+  ] = initialization;
 
   while (connected) {
     switch (
@@ -302,7 +321,11 @@ void* client_routing_server_thread_client(
       ]
     ) {
       case client:
-        switch (routing_stage) {
+        switch (
+          server->routing_stage[
+            index_client
+          ]
+        ) {
           case initialization: {
             printf("client_connect:mode: client\n");
 
@@ -392,7 +415,9 @@ void* client_routing_server_thread_client(
                 0
               );
 
-              routing_stage = messaging;
+              server->routing_stage[
+                index_client
+              ] = messaging;
             } else {
               send(
                 server->socket_clients[
@@ -425,17 +450,54 @@ void* client_routing_server_thread_client(
             );
 
             if (message[0] == '!') {
-              routing_stage = exiting;
+              server->routing_stage[
+                index_client
+              ] = exiting;
+
+              server->routing_stage[
+                server->index_connected[
+                  index_client
+                ]
+              ] = exiting;
             }
 
-            send(
-              server->socket_clients[
-                server->index_connected[index_client]
-              ],
-              message,
-              200,
-              0
-            );
+            if (
+              server->index_connected[index_client] == -1
+            ) {
+              for (
+                unsigned char index_message = 0;
+                index_message < 200;
+                ++index_message
+              ) {
+                message[
+                  index_message
+                ] = '\0';
+              }
+
+              clic3_bytes_copy(
+                message,
+                "no_client_connected\n",
+                20
+              );
+
+              send(
+                server->socket_clients[
+                  index_client
+                ],
+                message,
+                200,
+                0
+              );
+            } else {
+              send(
+                server->socket_clients[
+                  server->index_connected[index_client]
+                ],
+                message,
+                200,
+                0
+              );
+            }
 
             free(message);
             break;
@@ -447,7 +509,11 @@ void* client_routing_server_thread_client(
         }
         break;
       case client_host:
-        switch(routing_stage) {
+        switch(
+          server->routing_stage[
+            index_client
+          ]
+        ) {
           case initialization: {
             printf("client_connect:mode: client_host\n");
 
@@ -476,7 +542,9 @@ void* client_routing_server_thread_client(
               0
             );
 
-            routing_stage = messaging;
+            server->routing_stage[
+              index_client
+            ] = messaging;
             break;
           }
           case messaging: {
@@ -493,6 +561,18 @@ void* client_routing_server_thread_client(
               0
             );
 
+            if (message[0] == '!') {
+              server->routing_stage[
+                index_client
+              ] = exiting;
+
+              server->routing_stage[
+                server->index_connected[
+                  index_client
+                ]
+              ] = exiting;
+            }
+
             send(
               server->socket_clients[
                 server->index_connected[index_client]
@@ -503,6 +583,7 @@ void* client_routing_server_thread_client(
             );
 
             free(message);
+            break;
           }
           case exiting:
           default:
