@@ -19,6 +19,8 @@ int main(
   struct client_routing_parameters client_routing_parameters;
   client_routing_parameters.mode = server;
 
+  unsigned short int port = 419;
+
   for (
     int parameters_index = 1;
     parameters_index < length_parameters;
@@ -55,13 +57,13 @@ int main(
 
   switch (client_routing_parameters.mode) {
     case client:
-      return client_routing_client(0);
+      return client_routing_client(0, port);
       break;
     case client_host:
-      return client_routing_client(1);
+      return client_routing_client(1, port);
       break;
     case server:
-      return client_routing_server();
+      return client_routing_server(port);
       break;
     default:
       fprintf(
