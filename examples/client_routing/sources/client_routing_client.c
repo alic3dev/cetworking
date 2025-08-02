@@ -49,15 +49,13 @@ int client_routing_client(
     return status_socket_client;
   }
 
-  char message[20];
-
   enum client_routing_stage routing_stage = initialization;
   unsigned char connected = 1;
 
   if (host == 1) {
     do {
       switch (routing_stage) {
-        case initialization:
+        case initialization: {
           int status = send(
             socket_client, 
             "h",
@@ -82,7 +80,8 @@ int client_routing_client(
 
           routing_stage = messaging;
           break;
-        case messaging:
+        }
+        case messaging: {
           char* message = malloc(
             sizeof(char) * 200
           );
@@ -100,6 +99,7 @@ int client_routing_client(
           );
 
           free(message);
+        }
         case exiting:
         default:
           break;
@@ -108,7 +108,7 @@ int client_routing_client(
   } else {
     do {
       switch (routing_stage) {
-        case initialization:
+        case initialization: {
           send(
             socket_client,
             "c",
@@ -189,7 +189,8 @@ int client_routing_client(
           );
           routing_stage = messaging;
           break;
-        case messaging:
+        }
+        case messaging: {
           unsigned long int length_message = 200;
           char* message = malloc(
             sizeof(char) * length_message
@@ -208,6 +209,7 @@ int client_routing_client(
             200,
             0
           );        
+        }
         case exiting:
         default:
           break;

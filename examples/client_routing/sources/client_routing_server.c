@@ -303,7 +303,7 @@ void* client_routing_server_thread_client(
     ) {
       case client:
         switch (routing_stage) {
-          case initialization:
+          case initialization: {
             printf("client_connect:mode: client\n");
 
             bytes_length = recv(
@@ -409,7 +409,8 @@ void* client_routing_server_thread_client(
               );
             }
             break;
-          case messaging:
+          }
+          case messaging: {
             char* message = malloc(
               sizeof(char) * 200
             );
@@ -438,6 +439,7 @@ void* client_routing_server_thread_client(
 
             free(message);
             break;
+          }
           case exiting:
           default:
             connected = 0;
@@ -446,7 +448,7 @@ void* client_routing_server_thread_client(
         break;
       case client_host:
         switch(routing_stage) {
-          case initialization:
+          case initialization: {
             printf("client_connect:mode: client_host\n");
 
             for (
@@ -476,7 +478,8 @@ void* client_routing_server_thread_client(
 
             routing_stage = messaging;
             break;
-          case messaging:
+          }
+          case messaging: {
             char* message = malloc(
               sizeof(char) * 200
             );
@@ -500,6 +503,7 @@ void* client_routing_server_thread_client(
             );
 
             free(message);
+          }
           case exiting:
           default:
             connected = 0;
