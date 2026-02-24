@@ -3,21 +3,23 @@ on:
   push:
     branches: ["core"]
   pull_request:
-    branches: ["core"]
+    branches: ["*"]
+env:
+  target_device_version: 15.5
 jobs:
   continuous_integration_build:
     runs-on: macos-latest
     steps:
       - name: checkout_cetworking
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: cetworking
       - name: checkout_clic3
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: clic3
           repository: alic3dev/clic3
       - name: continuous_integration_build_make_clic3
-        run: cd clic3 && make library/clic3.o
+        run: cd clic3 && make library/clic3.o target_device_version=${{ target_device_version }}
       - name: continuous_integration_build_make_cetworking
-        run: cd cetworking && make all
+        run: cd cetworking && make all target_device_version=${{ target_device_version }}
