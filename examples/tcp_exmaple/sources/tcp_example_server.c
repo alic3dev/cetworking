@@ -38,7 +38,7 @@ int tcp_example_server() {
     sock,
     1
   );
-  
+
   if (listen_status < 0) {
     return listen_status;
   }

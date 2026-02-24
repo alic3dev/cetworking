@@ -67,7 +67,7 @@ int client_routing_server(
     server.socket_server,
     1
   );
-  
+
   if (listen_status < 0) {
     fprintf(
       stderr,
@@ -303,7 +303,7 @@ void* client_routing_server_thread_client(
     ? client_host
     : -1
   );
-  
+
   server->id_client_host[
     index_client
   ][10] = '\0';
