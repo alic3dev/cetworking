@@ -15,7 +15,7 @@ file_clic3_library=${directory_clic3_library}/clic3.o
 files_sources=${wildcard ${directory_sources}/*.c}
 files_objects=${patsubst ${directory_sources}/%.c,${directory_objects}/%.o,${files_sources}}
 
-cc=gcc
+cc=clang
 c_flags=-I${directory_include} -I${directory_clic3_include} -O3
 
 ${file_output}: ${files_objects} ${directory_output}
