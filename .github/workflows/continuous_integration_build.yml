@@ -20,6 +20,6 @@ jobs:
           path: clic3
           repository: alic3dev/clic3
       - name: continuous_integration_build_make_clic3
-        run: cd clic3 && make library/clic3.o target_device_version=${{ target_device_version }}
+        run: cd clic3 && make library/clic3.o target_device_version=${{ env.target_device_version }}
       - name: continuous_integration_build_make_cetworking
-        run: cd cetworking && make all target_device_version=${{ target_device_version }}
+        run: cd cetworking && make all target_device_version=${{ env.target_device_version }}
