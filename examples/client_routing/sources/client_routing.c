@@ -45,7 +45,7 @@ int main(
       default:
         fprintf(
           stderr,
-          "unknown_parameter: %s\n", 
+          "unknown_parameter: %s\n",
           parameters[
             parameters_index
           ]
@@ -71,7 +71,7 @@ int main(
         "unknown_mode: %i\n",
         client_routing_parameters.mode
       );
-      
+
       return 1;
   }
 
