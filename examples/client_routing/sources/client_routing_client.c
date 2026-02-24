@@ -64,7 +64,7 @@ int client_routing_client(
   do {
     if (host == 1) {
       int status = send(
-        client.socket_client, 
+        client.socket_client,
         "h",
         2,
         0
@@ -252,4 +252,8 @@ void* client_routing_client_thread(
       client->routing_stage = exiting;
     }
   }
+
+  return (
+    0
+  );
 }
