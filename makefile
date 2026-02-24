@@ -11,7 +11,7 @@ file_output=${directory_library}/${name}
 files_sources=${shell find ${directory_sources} -name \*.c}
 files_objects=${patsubst ${directory_sources}/%.c,${directory_objects}/%.o,${files_sources}}
 
-cc=gcc
+cc=clang
 c_flags=-O3 -I${directory_include}
 
 ld=ld

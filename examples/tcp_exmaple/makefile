@@ -1,5 +1,13 @@
 name=tcp_example
 
+ifndef target_device_version
+target_device_version=26.1
+endif
+
+target_platform=arm64-apple-macos${target_device_version}
+
+directory_sdk=${shell xcrun --sdk macosx${target_device_version} --show-sdk-path}
+
 directory_output=output
 directory_include=include
 directory_objects=objects
@@ -10,13 +18,14 @@ directory_clic3_include=${directory_clic3}/include
 directory_clic3_library=${directory_clic3}/library
 
 file_output=${directory_output}/${name}
-file_clic3_library=${directory_clic3_library}/clic3.o
+file_clic3_library=${directory_clic3_library}/macos/release/clic3.o
 
 files_sources=${wildcard ${directory_sources}/*.c}
 files_objects=${patsubst ${directory_sources}/%.c,${directory_objects}/%.o,${files_sources}}
 
-cc=gcc
-c_flags=-I${directory_include} -I${directory_clic3_include} -O3
+cc=clang
+c_flags_platform=-target ${target_platform} -isysroot ${directory_sdk}
+c_flags=-I${directory_include} -I${directory_clic3_include} -O3 ${c_flags_platform}
 
 ${file_output}: ${files_objects} ${directory_output}
 	${cc} ${c_flags} ${files_objects} ${file_clic3_library} -o $@
