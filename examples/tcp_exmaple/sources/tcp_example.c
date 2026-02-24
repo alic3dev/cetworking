@@ -9,7 +9,7 @@
 #include <stdio.h>
 
 int main(
-  int length_parameters, 
+  int length_parameters,
   char** parameters
 ) {
   struct tcp_example_parameters tcp_example_parameters;
@@ -32,7 +32,7 @@ int main(
           "client",
           "server"
         );
-        
+
         if (index_client_server == 0) {
           tcp_example_parameters.mode = client;
           break;
@@ -43,7 +43,7 @@ int main(
       default:
         fprintf(
           stderr,
-          "unknown_parameter: %s\n", 
+          "unknown_parameter: %s\n",
           parameters[
             parameters_index
           ]
@@ -66,7 +66,7 @@ int main(
         "unknown_mode: %i\n",
         tcp_example_parameters.mode
       );
-      
+
       return 1;
   }
 
