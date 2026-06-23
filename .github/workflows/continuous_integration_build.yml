@@ -8,7 +8,7 @@ env:
   target_device_version: 15.5
 jobs:
   continuous_integration_build:
-    runs-on: macos-latest
+    runs-on: macos-15
     steps:
       - name: checkout_cetworking
         uses: actions/checkout@v5
